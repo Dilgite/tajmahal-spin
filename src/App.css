@@ -1,6 +1,11 @@
 :root {
-  --app-font: 'Quicksand', 'Lato', sans-serif;
+  --app-font: "Quicksand", "Lato", sans-serif;
   --neutral-color: white;
+}
+
+html,
+body {
+  overflow: hidden;
 }
 
 .App {
