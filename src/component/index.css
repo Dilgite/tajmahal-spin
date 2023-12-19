@@ -1,5 +1,5 @@
 :root {
-  --wheel-font: 'Lato', 'Quicksand', sans-serif;
+  --wheel-font: "Lato", "Quicksand", sans-serif;
   --wheel-size: 25rem;
   --wheel-slice-spacing: 50px;
   --wheel-border-size: 5px;
@@ -33,7 +33,7 @@
 /* Triangle de sélection = 1 rose +  1 blanc */
 .wheel-container::before,
 .wheel-container::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   height: 0;
@@ -74,14 +74,19 @@
 
 .wheel.spinning {
   transition: transform var(--spinning-duration);
-  transform: rotate(calc(var(--nb-turn) * 360deg + (-360deg * var(--selected-item) / var(--nb-item, 1))));
+  transform: rotate(
+    calc(
+      var(--nb-turn) * 360deg +
+        (-360deg * var(--selected-item) / var(--nb-item, 1))
+    )
+  );
 }
 
 /* Centre de la roue = rond blanc au centre */
 .wheel::after {
   display: block;
   position: absolute;
-  content: '';
+  content: "";
   background-color: var(--neutral-color);
   width: 25px;
   height: 25px;
@@ -103,7 +108,8 @@
   left: 50%;
   width: 50%;
   transform-origin: center left;
-  transform: translateY(-50%) rotate(calc(var(--item-nb) * (360deg / var(--nb-item, 1))));
+  transform: translateY(-50%)
+    rotate(calc(var(--item-nb) * (360deg / var(--nb-item, 1))));
 
   /* texte */
   color: var(--neutral-color);
@@ -114,7 +120,7 @@
 
 /* Background de l'élément = triangle rose plus clair */
 .wheel-item:before {
-  content: ' ';
+  content: " ";
   display: block;
   position: absolute;
   box-sizing: border-box;
@@ -134,51 +140,64 @@
     mais globalement ca marche a peu près bien 
     TODO: A étudier 
   */
-  --slice-max-width: calc(var(--PI) * var(--wheel-size) + var(--wheel-size) / 2);
-  --slice-width: calc((var(--slice-max-width) / var(--nb-item)) - var(--wheel-slice-spacing));
+  --slice-max-width: calc(
+    var(--PI) * var(--wheel-size) + var(--wheel-size) / 2
+  );
+  --slice-width: calc(
+    (var(--slice-max-width) / var(--nb-item)) - var(--wheel-slice-spacing)
+  );
   border: solid transparent calc(var(--slice-width) / 2);
   border-left: solid transparent 0;
   /* profondeur du triangle = du centre de la roue à la bordure = 300px / 2 */
   border-right: solid var(--neutral-color) calc(var(--wheel-size) / 2);
 }
 
-.button_primary{
-/* Auto layout */
+/* Highlight the selected wheel item */
+#selected-wheel-item::before {
+  content: " ";
+  z-index: -1;
+  opacity: 0.7;
 
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 0px 16px;
-margin-top: 2rem;
-width: 10rem;
-height: 2rem;
-color:white;
-/* Brand Grad */
-
-background: linear-gradient(140.88deg, #F57B1C 6.61%, #CB3C23 93.46%);
-border-radius: 20px;
+  border: solid transparent calc(var(--slice-width) / 1.5);
+  border-left: solid #2f1211 0;
+  border-right: solid #2f1211 calc(var(--wheel-size) / 2);
 }
-.text{
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 1rem;
-line-height: 100%;
-margin-top: 2rem;
-/* identical to box height, or 16px */
 
-display: flex;
-align-items: center;
+.button_primary {
+  /* Auto layout */
 
-/* Orange */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 16px;
+  margin-top: 2rem;
+  width: 10rem;
+  height: 2rem;
+  color: white;
+  /* Brand Grad */
 
-color: #F57B1C;
+  background: linear-gradient(140.88deg, #f57b1c 6.61%, #cb3c23 93.46%);
+  border-radius: 20px;
+}
+.text {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 4rem;
+  color: hsl(0 0% 98%);
+  /* identical to box height, or 16px */
 
+  display: flex;
+  align-items: center;
 
-/* Inside auto layout */
+  /* Orange */
 
-flex: none;
-order: 0;
-flex-grow: 0;
+  color: #f57b1c;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
