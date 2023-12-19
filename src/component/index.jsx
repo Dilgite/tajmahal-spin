@@ -7,6 +7,7 @@ import {
   capitalizeFirstLetters,
   randomNumberGenerate,
 } from "../helpers/utilitiy";
+import CrowdCheerAudio from "./CrowdCheerAudio";
 import SpinningAudio from "./SpinningAudio";
 import "./index.css";
 export default class Wheel extends React.Component {
@@ -17,12 +18,10 @@ export default class Wheel extends React.Component {
       isSelected: false,
     };
     this.selectItem = this.selectItem.bind(this);
-
-    this.state = {
-      isPlaying: false,
-    };
-    this.audioRef = React.createRef();
-    this.audioFile = "./sppinning-sound.mp3";
+    this.spinAudioRef = React.createRef();
+    this.spinAudioFile = "./sppinning-sound.mp3";
+    this.crowdCheeerAudioRef = React.createRef();
+    this.crowdCheeerAudioFile = "./crowd-cheering.mp3";
   }
 
   componentDidMount() {
@@ -37,7 +36,7 @@ export default class Wheel extends React.Component {
 
   selectItem() {
     if (this.state.selectedItem === null) {
-      this.togglePlay();
+      this.playSpinAudio();
       const selectedItem = randomNumberGenerate(
         items,
         frequencyOfItems,
@@ -50,6 +49,7 @@ export default class Wheel extends React.Component {
       setTimeout(() => {
         localStorage.setItem("reward", items[selectedItem]);
         this.setState({ isSelected: true });
+        this.playCrowdCheerAudio();
       }, 2300);
     } else {
       this.setState({ selectedItem: null });
@@ -57,18 +57,17 @@ export default class Wheel extends React.Component {
     }
   }
 
-  togglePlay = () => {
-    const audio = this.audioRef.current;
+  playSpinAudio = () => {
+    const audio = this.spinAudioRef.current;
 
-    if (this.state.isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
+    audio.play();
+  };
 
-    this.setState((prevState) => ({
-      isPlaying: !prevState.isPlaying,
-    }));
+  playCrowdCheerAudio = () => {
+    const spinAudio = this.spinAudioRef.current;
+    spinAudio.pause();
+    const crowCheerAudio = this.crowdCheeerAudioRef.current;
+    crowCheerAudio.play();
   };
 
   render() {
@@ -145,8 +144,17 @@ export default class Wheel extends React.Component {
           <img className="logo" src={logo} alt={"dlg_logo"} />
         </div>
 
-        {/* Add an audio */}
-        <SpinningAudio audioFile={this.audioFile} audioRef={this.audioRef} />
+        {/* Add spin audio */}
+        <SpinningAudio
+          audioFile={this.spinAudioFile}
+          audioRef={this.spinAudioRef}
+        />
+
+        {/* Add crowd cheer audio */}
+        <CrowdCheerAudio
+          audioFile={this.crowdCheeerAudioFile}
+          audioRef={this.crowdCheeerAudioRef}
+        />
       </div>
     );
   }
